@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+
+header{
+    position: fixed;
+    top:0; left:0; right:0;
+    background:#008000;
+    padding:2rem 9%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+
+}
+
+header .logo{
+    font-family: 'Black Ops One', cursive;
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 3rem;
+}
+
+
+
+header .icons a{
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 1.7rem;
+    margin-left: 3.5rem;
+}
+
+
+header #toggler{
+    display: none;
+}
+
+header .fa-bars{
+    font-size: 3rem;
+    color:#333;
+    border-radius: .5rem;
+    padding:.5rem 1.5rem;
+    cursor: pointer;
+    border:.1rem solid rgba(0,0,0,.3);
+    display: none;
+}
+
+header .menu{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .Exit{
+    margin-left: 20px;
+    text-decoration: none;
+    color: white;
+    width: 7rem;
+}
+
+header .butt {
+    width: 6rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    padding: .8em 1em calc(.8em + 3px);
+    border-radius: 3px;
+    background: rgb(64,199,129);
+    box-shadow: 0 -3px rgb(53,167,110) inset;
+    border: none;
+    transition: 0.2s;
+}
+header .butt:hover {
+    background: rgb(53, 167, 110);
+}
+
+header .butt:active {
+    background: rgb(33,147,90);
+    box-shadow: 0 3px rgb(33,147,90) inset;
+}
+
+.admin{
+    margin-top: 10rem;
+    margin-left: 2rem;
+    min-height: 30rem;
+}

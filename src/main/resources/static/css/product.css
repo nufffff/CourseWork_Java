@@ -1,0 +1,98 @@
+.wrapper {
+    margin-top: 10rem;
+}
+
+.content {
+    padding: 0 10%;
+    min-height: calc(100vh - 10rem);
+}
+
+.content * {
+    font-family: Circe, sans-serif;
+}
+
+h2 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+.img-head {
+    height: 30rem;
+    width: 30rem;
+    object-fit: cover;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.one, .two, .three {
+    width: 28%;
+}
+
+.one .title {
+    font-size: 2rem;
+    color: #5f0f40;
+}
+
+.one .head {
+    margin-left: 2rem;
+    font-size: 2.5rem;
+    color: #fb8b24;
+}
+
+.label {
+    font-size: 2rem;
+    color: #5f0f40;
+    border-bottom: 3px solid #008000;
+    margin-bottom: 1rem;
+}
+
+.two li {
+    padding: 0.5rem 0;
+    font-size: 2rem;
+    list-style: none;
+    border-bottom: 1px solid grey;
+}
+
+.two li .head {
+    margin-left: 2rem;
+}
+
+.margin {
+    margin-top: 2rem;
+}
+
+.info-label {
+    font-size: 2rem;
+
+}
+
+#bold {
+    font-weight: bold;
+}
+
+.butt {
+    width: 10rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    padding: .8em 1em calc(.8em + 3px);
+    border-radius: 3px;
+    background: rgb(64,199,129);
+    box-shadow: 0 -3px rgb(53,167,110) inset;
+    border: none;
+    transition: 0.2s;
+}
+ .butt:hover {
+    background: rgb(53, 167, 110);
+}
+
+.butt:active {
+    background: rgb(33,147,90);
+    box-shadow: 0 3px rgb(33,147,90) inset;
+}

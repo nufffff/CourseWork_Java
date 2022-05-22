@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cтроительный магазин</title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css">
+</head>
+<body>
+
+<header>
+    <input type="checkbox" name="" id="toggler">
+    <label for="toggler" class="fas fa-bars"></label>
+
+    <a th:href="@{/index}" class="logo">HardwareStore</a>
+    <div class="menu" >
+        <div class="icons">
+            <a class="fas fa-user" th:text="${name}"></a>
+            <a th:href="@{/profile/cart-product}" class="fas fa-shopping-cart"></a>
+        </div>
+            <div class = "Exit">
+                <form th:action="@{/auth/login}">
+                    <input class="butt" sec:authorize="isAnonymous()" type="submit" value="Войти">
+                </form>
+
+                <form th:method="POST" th:action="@{/logout}">
+                    <input class="butt" sec:authorize="isAuthenticated()" type="submit" value="Выйти">
+                </form>
+            </div>
+    </div>
+
+</header>
+
+<h1 >Каталог товаров</h1>
+
+<div class="wrapper">
+    <div class="content">
+            <div class="carts-type" >
+                <div class="types" th:each="element : ${products}">
+                    <div class="cart">
+                        <h2 th:text="${element.name}" ></h2>
+                        <div class="img-cart"><a th:href="@{'/' + ${element.id}}"><img th:src="@{'/image/'} + ${element.image}"></a></div>
+                        <p class="price"  th:text="${element.price} + ' руб'"></p>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+
+<footer class="footer-distributed">
+
+    <div class="footer-right">
+
+
+        <a href="https://vk.com/ildarqw"><i class="fa fa-vk"></i></a>
+        <a href="https://instagram.com/nufffff"><i class="fa fa-instagram"></i></a>
+        <a href="https://github.com/nufffff"><i class="fa fa-github"></i></a>
+        <a href="#"><i class="fa fa-facebook"></i></a>
+
+    </div>
+        <p class="copy">HardwareStore &copy; 2022</p>
+    </div>
+
+</footer>
+</body>
+</html>

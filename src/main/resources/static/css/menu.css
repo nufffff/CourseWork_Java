@@ -1,0 +1,65 @@
+/*КОНТЕНТ*/
+.wrapper {
+    margin-top: 3rem;
+}
+
+.content {
+    padding: 0 10%;
+    min-height: calc(100vh - 10rem);
+}
+
+.content a {
+    text-decoration: none;
+}
+/*заголовки*/
+
+h1 {
+    text-align: center;
+    margin-top: 10rem;
+    margin-left: 3rem;
+    font-family: Circe, sans-serif;
+    font-size: 3rem;
+}
+h2 {
+    text-align: center;
+    font: 2rem Circe;
+    font-weight: bold;
+}
+
+/*карточки меню*/
+.carts-type {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.cart {
+    border: 3px solid #008000;
+    margin-bottom: 2rem;
+}
+
+.img-cart img {
+    height: 12rem;
+    width: 12rem;
+    margin: 1rem 3rem;
+    object-fit: cover;
+}
+
+/*подписи внизу*/
+.cart p, .cart a {
+    margin: 1.2rem 0.8rem;
+    vertical-align: middle;
+}
+
+.cart p {
+    font: 1.8rem Circe;
+    margin-left: 3rem;
+}
+
+
+.cart .price {
+    font-weight: bold;
+}
+
+

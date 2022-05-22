@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="../css/style.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<div id="login-form">
+    <h1>Регистрация</h1>
+    <fieldset>
+        <form th:method="POST" th:action="@{/auth/registration}" th:object="${person}">
+            <input type="text" name="username" required value="Логин" onBlur="if(this.value=='')this.value='Логин'" onFocus="if(this.value=='Логин')this.value='' ">
+            <input type="email" name="email" required value="Email" onBlur="if(this.value=='')this.value='Email'" onFocus="if(this.value=='Email')this.value='' ">
+            <input type="password" name="password" required value="Пароль" onBlur="if(this.value=='')this.value='Пароль'" onFocus="if(this.value=='Пароль')this.value='' ">
+            <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ">
+        </form>
+        <p>Уже Зарегестрированы? <a th:href="@{/auth/login}">Войти<a></p>
+    </fieldset>
+    <div th:if="${param.error}" style="color: red">
+        Неправильные имя или пароль
+    </div>
+</div>
+
+</body>
+</html>
