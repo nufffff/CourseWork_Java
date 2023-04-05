@@ -47,6 +47,7 @@ public class CartController {
         List<Product> productList = user.getProductList();
         int sum = 0;
         Product p;
+        System.out.println("hello");
         for(Iterator var4 = productList.iterator(); var4.hasNext(); sum += p.getPrice()) {
             p = (Product)var4.next();
         }
