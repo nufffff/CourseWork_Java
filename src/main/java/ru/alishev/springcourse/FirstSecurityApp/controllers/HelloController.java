@@ -46,7 +46,7 @@ public class HelloController {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         String name = authentication.getName();
-
+        System.out.println("Zaebalsa");
         model.addAttribute("name", name);
         model.addAttribute("show",personDetailsService.showAll());
         return "admin";
