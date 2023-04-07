@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.alishev.springcourse.FirstSecurityApp.models.Person;
+import ru.alishev.springcourse.FirstSecurityApp.models.Role;
 import ru.alishev.springcourse.FirstSecurityApp.repositories.PeopleRepository;
 
 
@@ -23,7 +24,7 @@ public class RegistrationService {
     @Transactional
     public void register(Person person) {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
-        person.setRole("ROLE_USER");
+        person.setRole(Role.ROLE_USER);
         peopleRepository.save(person);
     }
 }

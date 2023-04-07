@@ -26,7 +26,8 @@ public class Person {
     private String email;
 
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @ManyToMany(
             cascade = {CascadeType.DETACH},
@@ -91,15 +92,15 @@ public class Person {
     }
 
     public String getRole() {
-        return role;
+        return role.name();
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
     @Override
     public String toString() {
-        return  " username='" + username + '\'' + ", email=" + email + ", role='" + role + '\'';
+        return  " username='" + username + '\'' + ", email=" + email + ", role='" + role.name() + '\'';
     }
 }

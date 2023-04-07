@@ -20,9 +20,14 @@ public class Product {
 
     private String image;
 
-    public Product(){
+    @Enumerated(EnumType.STRING)
+    private TypeProduct type;
+
+
+    public Product() {
 
     }
+
     @ManyToMany(
             mappedBy = "productList",
             fetch = FetchType.EAGER
@@ -38,14 +43,7 @@ public class Product {
         this.personList = personList;
     }
 
-    public Product(String name, Integer price, String image) {
-        this.name = name;
-        this.price = price;
-        this.image = image;
-    }
-
-
-
+    
     public int getId() {
         return id;
     }
@@ -78,6 +76,13 @@ public class Product {
         this.image = image;
     }
 
+    public TypeProduct getType() {
+        return type;
+    }
+
+    public void setType(TypeProduct type) {
+        this.type = type;
+    }
 
 
 }
