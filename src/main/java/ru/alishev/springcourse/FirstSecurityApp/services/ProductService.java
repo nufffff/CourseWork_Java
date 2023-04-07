@@ -36,7 +36,7 @@ public class ProductService {
         List<Person> personList = productRepository.findByName(product.getName()).get().getPersonList();
         personList.removeIf(x-> x.getId() == user.getId());
         product.setPersonList(personList);
-        System.out.println("hello");
+        System.out.println("smile");
         productRepository.save(product);
         System.out.println("boom");
     }
