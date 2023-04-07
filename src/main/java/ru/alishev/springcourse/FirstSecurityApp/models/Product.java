@@ -11,13 +11,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name")
+
     private String name;
 
-    @Column(name = "price")
+
     private Integer price;
 
-    @Column(name = "image")
+
     private String image;
 
     public Product(){

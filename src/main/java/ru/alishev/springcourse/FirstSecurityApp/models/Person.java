@@ -12,24 +12,20 @@ import java.util.List;
 @Table(name = "Users")
 public class Person {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
 
     @NotEmpty
-    @Column(name = "username")
     private String username;
 
     @NotEmpty
-    @Column(name = "password")
     private String password;
 
     @Email
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "role")
+
     private String role;
 
     @ManyToMany(

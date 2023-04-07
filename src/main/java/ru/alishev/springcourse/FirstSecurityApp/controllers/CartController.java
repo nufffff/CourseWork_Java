@@ -20,12 +20,14 @@ import ru.alishev.springcourse.FirstSecurityApp.services.ProductService;
 
 @Controller
 public class CartController {
-    @Autowired
-    private PersonDetailsService userService;
-    @Autowired
-    ProductService productService;
 
-    public CartController() {
+    private final PersonDetailsService userService;
+
+    private final ProductService productService;
+    @Autowired
+    public CartController(PersonDetailsService userService, ProductService productService) {
+        this.userService = userService;
+        this.productService = productService;
     }
 
     @GetMapping({"profile/cart-product"})
