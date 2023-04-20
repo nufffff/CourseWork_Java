@@ -40,9 +40,20 @@ public class Person {
     )
     private List<Product> productList;
 
+    @OneToMany(mappedBy = "person")
+    private List<Order> order;
 
     // Конструктор по умолчанию нужен для Spring
+
     public Person() {
+    }
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
     }
 
     public Person(String username, String email) {

@@ -1,5 +1,7 @@
 package ru.alishev.springcourse.FirstSecurityApp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -31,32 +33,16 @@ public class Product {
     )
     private List<Order> ordersList;
 
-    @OneToMany(mappedBy = "person")
-    private List<Order> listOrder;
+
+
+
+
 
     public Product() {
 
     }
 
 
-
-    public List<Order> getOrdersList() {
-        return ordersList;
-    }
-
-    public void setOrdersList(List<Order> ordersList) {
-        this.ordersList = ordersList;
-    }
-
-    public List<Person> getPersonList() {
-        return personList;
-    }
-
-    public void setPersonList(List<Person> personList) {
-        this.personList = personList;
-    }
-
-    
     public int getId() {
         return id;
     }
@@ -89,5 +75,19 @@ public class Product {
         this.image = image;
     }
 
+    public List<Person> getPersonList() {
+        return personList;
+    }
 
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
+    }
+
+    public List<Order> getOrdersList() {
+        return ordersList;
+    }
+
+    public void setOrdersList(List<Order> ordersList) {
+        this.ordersList = ordersList;
+    }
 }

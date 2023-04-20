@@ -1,12 +1,13 @@
 package ru.alishev.springcourse.FirstSecurityApp.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 @Table(name = "Orders")
-public class Order {
+public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -29,6 +30,15 @@ public class Order {
 
     public Order() {
     }
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+
 
     public int getId() {
         return id;

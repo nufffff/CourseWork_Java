@@ -7,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.alishev.springcourse.FirstSecurityApp.models.Person;
 import ru.alishev.springcourse.FirstSecurityApp.models.Product;
 import ru.alishev.springcourse.FirstSecurityApp.repositories.PeopleRepository;
 import ru.alishev.springcourse.FirstSecurityApp.services.PersonDetailsService;
@@ -38,6 +37,7 @@ public class HelloController {
         model.addAttribute("name", name);
         return "index";
     }
+
 
 
     @GetMapping("/admin")

@@ -21,7 +21,7 @@ public class ProductController {
     public ProductController() {
     }
 
-    @GetMapping({"/{id}"})
+    @GetMapping("/{id}")
     public String getProduct(@PathVariable("id") int id, Model model) {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
