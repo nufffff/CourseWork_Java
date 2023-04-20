@@ -6,17 +6,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.alishev.springcourse.FirstSecurityApp.models.Product;
 import ru.alishev.springcourse.FirstSecurityApp.repositories.ProductRepository;
+import ru.alishev.springcourse.FirstSecurityApp.services.TestService;
 
 import java.util.List;
 
 @RestController
 public class TestController {
     @Autowired
-    private ProductRepository productRepository;
+    private TestService testService;
 
     @GetMapping("/test")
     public List<Product> getAllListProduct(){
-        productRepository.findAll().forEach(System.out::println);
-        return productRepository.findAll();
+        return testService.getAllListProduct();
+    }
+    @GetMapping("/sort")
+    public List<Product> getAllListSortProduct(){
+        return testService.getAllListSortProduct();
     }
 }

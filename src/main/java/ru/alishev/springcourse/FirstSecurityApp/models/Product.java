@@ -20,13 +20,13 @@ public class Product {
 
 
     private String image;
-
+    @JsonIgnore
     @ManyToMany(
             mappedBy = "productList",
             fetch = FetchType.EAGER
     )
     private List<Person> personList;
-
+    @JsonIgnore
     @ManyToMany(
             mappedBy = "prodList",
             fetch = FetchType.EAGER

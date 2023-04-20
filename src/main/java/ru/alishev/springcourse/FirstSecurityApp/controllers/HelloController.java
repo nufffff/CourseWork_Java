@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.alishev.springcourse.FirstSecurityApp.models.Product;
-import ru.alishev.springcourse.FirstSecurityApp.repositories.PeopleRepository;
 import ru.alishev.springcourse.FirstSecurityApp.services.PersonDetailsService;
 import ru.alishev.springcourse.FirstSecurityApp.services.ProductService;
 
@@ -27,7 +26,7 @@ public class HelloController {
         this.personDetailsService = personDetailsService;
     }
 
-    @GetMapping({"/index"})
+    @GetMapping("/index")
     public String index(Model model) {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
@@ -50,5 +49,11 @@ public class HelloController {
         model.addAttribute("name", name);
         model.addAttribute("show",personDetailsService.showAll());
         return "admin";
+    }
+    @GetMapping("/lol")
+    public String getTest() {
+
+
+        return "/test/feat_sort";
     }
 }

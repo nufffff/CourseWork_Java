@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Список товаров</title>
+</head>
+<body>
+<h1>Список товаров</h1>
+
+<button onclick="sortItemsByPrice()">Сортировать по цене</button>
+<ul id="itemsList"></ul>
+
+<script>
+    let isAscendingOrder = true;
+    let items = null;
+
+    function loadItems() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '/test', true);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                items = JSON.parse(xhr.responseText);
+                displayItems(items);
+            } else {
+                console.error('Не удалось получить список товаров. Статус ответа: ' + xhr.status);
+            }
+        };
+
+        xhr.onerror = function () {
+            console.error('Произошла ошибка при отправке запроса');
+        };
+
+        xhr.send();
+    }
+
+    function displayItems(items) {
+        const itemsList = document.getElementById('itemsList');
+        itemsList.innerHTML = '';
+
+        items.forEach(function (item) {
+            const itemDiv = document.createElement('div');
+            const img = document.createElement('img');
+            img.src = "/image/" + item.image; // путь до картинки
+            itemDiv.appendChild(img);
+            const name = document.createElement('p');
+            name.innerText = item.name;
+            itemDiv.appendChild(name);
+            const price = document.createElement('p');
+            price.innerText = item.price + ' руб.';
+            itemDiv.appendChild(price);
+            itemsList.appendChild(itemDiv);
+        });
+    }
+
+    function sortItemsByPrice() {
+
+
+        if (isAscendingOrder) {
+            items.sort(function (a, b) {
+                return a.price - b.price;
+            });
+        } else {
+            items.sort(function (a, b) {
+                return b.price - a.price;
+            });
+        }
+        isAscendingOrder = !isAscendingOrder;
+        displayItems(items);
+
+
+    }
+
+    loadItems();
+</script>
+
+</body>
+</html>
