@@ -120,14 +120,13 @@
                 if (btn) {
                     btn.remove();
                 }
-                if(currentPage === 1){
+                const content = document.querySelector('.content');
 
-                }
 
                 const newBtn = document.createElement('button');
                 newBtn.textContent = 'Показать еще';
                 newBtn.classList.add('show-more');
-                cartsType.appendChild(newBtn);
+                content.appendChild(newBtn);
                 newBtn.addEventListener('click', () => {
                     displayPage(currentPage);
                 });
@@ -137,80 +136,7 @@
         displayPage(currentPage);
     }
 
-    function displayItemsPause(items) {
-        const cartsType = document.querySelector('.carts-type');
-        cartsType.innerHTML = '';
-        console.log("lalal")
-        console.log(items)
 
-        items.forEach(item => {
-            const cart = document.createElement('div');
-            cart.classList.add('cart');
-
-            const name = document.createElement('h2');
-            name.textContent = item.name;
-
-            const imgCart = document.createElement('div');
-            imgCart.classList.add('img-cart');
-            const img = document.createElement('img');
-            img.src = `/image/${item.image}`;
-            const link = document.createElement('a');
-            link.href = `/${item.id}`;
-            link.appendChild(img);
-            imgCart.appendChild(link);
-
-            const price = document.createElement('p');
-            price.classList.add('price');
-            price.textContent = `${item.price} руб`;
-
-            cart.appendChild(name);
-            cart.appendChild(imgCart);
-            cart.appendChild(price);
-            cartsType.appendChild(cart);
-
-        });
-    }
-    function displayItemsPause3(items) {
-        const cartsType = document.querySelector('.carts-type');
-        const showMoreBtn = document.querySelector('.show-more');
-
-        let start = cartsType.children.length;
-        let end = start + 9;
-
-        if (end >= items.length) {
-            end = items.length;
-            showMoreBtn.style.display = 'none';
-        } else {
-            showMoreBtn.style.display = 'block';
-        }
-
-        for (let i = start; i < end; i++) {
-            const item = items[i];
-            const cart = document.createElement('div');
-            cart.classList.add('cart');
-
-            const name = document.createElement('h2');
-            name.textContent = item.name;
-
-            const imgCart = document.createElement('div');
-            imgCart.classList.add('img-cart');
-            const img = document.createElement('img');
-            img.src = `/image/${item.image}`;
-            const link = document.createElement('a');
-            link.href = `/${item.id}`;
-            link.appendChild(img);
-            imgCart.appendChild(link);
-
-            const price = document.createElement('p');
-            price.classList.add('price');
-            price.textContent = `${item.price} руб`;
-
-            cart.appendChild(name);
-            cart.appendChild(imgCart);
-            cart.appendChild(price);
-            cartsType.appendChild(cart);
-        }
-    }
 
     function sortItemsByPrice() {
 
