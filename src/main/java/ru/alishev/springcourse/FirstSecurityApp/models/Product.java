@@ -7,7 +7,6 @@ import java.util.List;
 @Table(name = "product")
 public class Product {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -20,20 +19,34 @@ public class Product {
 
     private String image;
 
-    @Enumerated(EnumType.STRING)
-    private TypeProduct type;
-
-
-    public Product() {
-
-    }
-
     @ManyToMany(
             mappedBy = "productList",
             fetch = FetchType.EAGER
     )
     private List<Person> personList;
 
+    @ManyToMany(
+            mappedBy = "prodList",
+            fetch = FetchType.EAGER
+    )
+    private List<Order> ordersList;
+
+    @OneToMany(mappedBy = "person")
+    private List<Order> listOrder;
+
+    public Product() {
+
+    }
+
+
+
+    public List<Order> getOrdersList() {
+        return ordersList;
+    }
+
+    public void setOrdersList(List<Order> ordersList) {
+        this.ordersList = ordersList;
+    }
 
     public List<Person> getPersonList() {
         return personList;
@@ -74,14 +87,6 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public TypeProduct getType() {
-        return type;
-    }
-
-    public void setType(TypeProduct type) {
-        this.type = type;
     }
 
 
