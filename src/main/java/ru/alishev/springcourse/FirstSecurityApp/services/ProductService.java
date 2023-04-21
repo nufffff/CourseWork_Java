@@ -3,6 +3,7 @@ package ru.alishev.springcourse.FirstSecurityApp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.alishev.springcourse.FirstSecurityApp.models.Person;
 import ru.alishev.springcourse.FirstSecurityApp.models.Product;
 import ru.alishev.springcourse.FirstSecurityApp.repositories.ProductRepository;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 
 @Service
+@Transactional(readOnly = true)
 public class ProductService {
     private final ProductRepository productRepository;
 
@@ -27,17 +29,15 @@ public class ProductService {
     public List<Product> getAll() {
         return  productRepository.findAll();
     }
-
+    @Transactional
     public void addProduct(Product product) {
         this.productRepository.save(product);
     }
-
+    @Transactional
     public void delete(Product product, Person user) {
-        List<Person> personList = productRepository.findByName(product.getName()).get().getPersonList();
+        var personList = product.getPersonList();
         personList.removeIf(x-> x.getId() == user.getId());
         product.setPersonList(personList);
-        System.out.println("smile");
         productRepository.save(product);
-        System.out.println("boom");
     }
 }

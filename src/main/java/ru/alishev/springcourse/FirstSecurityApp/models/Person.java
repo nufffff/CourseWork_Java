@@ -1,5 +1,7 @@
 package ru.alishev.springcourse.FirstSecurityApp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -29,6 +31,7 @@ public class Person {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @JsonIgnore
     @ManyToMany(
             cascade = {CascadeType.DETACH},
             fetch = FetchType.EAGER
@@ -39,6 +42,7 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<Product> productList;
+    @JsonIgnore
 
     @OneToMany(mappedBy = "person")
     private List<Order> order;

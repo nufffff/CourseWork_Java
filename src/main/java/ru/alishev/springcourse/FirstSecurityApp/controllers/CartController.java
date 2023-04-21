@@ -14,9 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.alishev.springcourse.FirstSecurityApp.models.Person;
+import ru.alishev.springcourse.FirstSecurityApp.models.PersonProductId;
 import ru.alishev.springcourse.FirstSecurityApp.models.Product;
 import ru.alishev.springcourse.FirstSecurityApp.services.PersonDetailsService;
 import ru.alishev.springcourse.FirstSecurityApp.services.ProductService;
+import ru.alishev.springcourse.FirstSecurityApp.services.TestService;
 
 @Controller
 public class CartController {
@@ -24,10 +26,12 @@ public class CartController {
     private final PersonDetailsService userService;
 
     private final ProductService productService;
+    private final TestService testService;
     @Autowired
-    public CartController(PersonDetailsService userService, ProductService productService) {
+    public CartController(PersonDetailsService userService, ProductService productService, TestService testService) {
         this.userService = userService;
         this.productService = productService;
+        this.testService = testService;
     }
 
     @GetMapping({"profile/cart-product"})
@@ -37,9 +41,10 @@ public class CartController {
         Authentication authentication = context.getAuthentication();
         String name = authentication.getName();
 
-        Person user = (Person) userService.getPerson(authentication.getName());
+        Person user =  userService.getPerson(authentication.getName());
+        var pPById_Person = testService.findAllById_Person();
         int total = this.findSum(user);
-        model.addAttribute("user", user);
+        model.addAttribute("listPP", pPById_Person);
         model.addAttribute("total", total);
         model.addAttribute("name", name);
         return "profile/cart-product";
@@ -84,12 +89,50 @@ public class CartController {
         Authentication authentication = context.getAuthentication();
 
         Person user = userService.getPerson(authentication.getName());
-        Product product = this.productService.getById(productId).get();
+        Product product = productService.getById(productId).get();
 
-        userService.delete(user,product);
-        productService.delete(product,user);
+        var pPId = new PersonProductId(user, product);
+        var pP = testService.getPP(pPId);
+
+        testService.deleteNewFeature(pP);
+        //userService.delete(user,product);
+        //productService.delete(product,user);
+
+
+
 
         return "redirect:/profile/cart-product";
     }
+    @GetMapping({"profile/cart-product/incAmount/{id}"})
+    public String addAmount(@PathVariable("id") int productId){
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+
+        Person user = userService.getPerson(authentication.getName());
+        Product product = this.productService.getById(productId).get();
+        testService.addAmount(user, product);
+
+
+
+        return "redirect:/profile/cart-product";
+    }
+    @GetMapping({"profile/cart-product/reduceAmount/{id}"})
+    public String reduceAmount(@PathVariable("id") int productId){
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+
+        Person user = userService.getPerson(authentication.getName());
+        Product product = this.productService.getById(productId).get();
+        var pPId = new PersonProductId(user, product);
+        var pP = testService.getPP(pPId);
+        testService.reduce(pP);
+
+
+
+        return "redirect:/profile/cart-product";
+    }
+
 
 }

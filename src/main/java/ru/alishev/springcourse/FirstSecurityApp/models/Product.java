@@ -90,4 +90,14 @@ public class Product {
     public void setOrdersList(List<Order> ordersList) {
         this.ordersList = ordersList;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", image='" + image + '\'' +
+                '}';
+    }
 }

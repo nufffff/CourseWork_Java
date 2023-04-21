@@ -10,6 +10,7 @@ import ru.alishev.springcourse.FirstSecurityApp.repositories.PeopleRepository;
 
 
 @Service
+@Transactional(readOnly = true)
 public class RegistrationService {
 
     private final PeopleRepository peopleRepository;

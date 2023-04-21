@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.alishev.springcourse.FirstSecurityApp.models.Person;
 import ru.alishev.springcourse.FirstSecurityApp.models.Product;
 import ru.alishev.springcourse.FirstSecurityApp.repositories.PeopleRepository;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 
 @Service
+@Transactional(readOnly = true)
 public class PersonDetailsService implements UserDetailsService {
 
     private final PeopleRepository peopleRepository;
@@ -37,20 +39,20 @@ public class PersonDetailsService implements UserDetailsService {
     public Person getPerson(String username) {
         return peopleRepository.findByUsername(username).get();
     }
-
+    @Transactional
     public void update(Person user, Product product) {
 
-        List<Product> productlist = peopleRepository.findByUsername(user.getUsername()).get().getProductList();
+        var productlist = user.getProductList();
         productlist.add(product);
         user.setProductList(productlist);
         peopleRepository.save(user);
     }
-
+    @Transactional
     public void delete(Person user, Product product) {
 
-        List<Product> productlist = peopleRepository.findByUsername(user.getUsername()).get().getProductList();
-        productlist.removeIf(x-> x.getId() == product.getId());
-        user.setProductList(productlist);
+        var productList = user.getProductList();
+        productList.removeIf(x-> x.getId() == product.getId());
+        user.setProductList(productList);
         peopleRepository.save(user);
     }
 

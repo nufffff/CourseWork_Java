@@ -39,21 +39,31 @@
 
 <h1  class="cart">Корзина</h1>
 <div class="container">
-  <div class="rowrow" th:each="product : ${user.productList}">
+  <div class="rowrow" th:each="product : ${listPP}">
     <div class="list-group">
-      <img th:src="@{'/image/' + ${product.image}}" height="100">
+      <img th:src="@{'/image/' + ${product.getId().getProduct().getImage()}}" height="100">
     </div>
     <br>
     <div class="list-group">
       <span class="a">Продукт</span>
-      <span class="b" th:text="${product.name}"></span>
+      <span class="b" th:text="${product.getId().getProduct().getName()}"></span>
     </div>
     <div class="list-group">
       <span class="a">Цена</span>
-      <span class="b" th:text="${product.price} + ' руб'"></span>
+      <span class="b" th:text="${product.getId().getProduct().getPrice()} + ' руб'"></span>
     </div>
     <div class="list-group">
-      <a class="delete" th:href="@{'/profile/cart-product/delete/'+ ${product.id}}"><span class="a">Удалить</span></a>
+      <span class="a">Количество</span>
+      <span class="b" th:text="${product.getAmount()}"></span>
+    </div>
+    <div class="list-group">
+      <a class="delete" th:href="@{'/profile/cart-product/incAmount/'+ ${product.getId().getProduct().getId()}}"><span class="a">Добавить</span></a>
+    </div>
+    <div class="list-group">
+      <a class="delete" th:href="@{'/profile/cart-product/reduceAmount/'+ ${product.getId().getProduct().getId()}}"><span class="a">Уменьшить</span></a>
+    </div>
+    <div class="list-group">
+      <a class="delete" th:href="@{'/profile/cart-product/delete/'+ ${product.getId().getProduct().getId()}}"><span class="a">Удалить</span></a>
     </div>
   </div>
 </div>
