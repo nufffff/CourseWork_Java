@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.alishev.springcourse.FirstSecurityApp.models.Person;
-import ru.alishev.springcourse.FirstSecurityApp.models.Role;
+import ru.alishev.springcourse.FirstSecurityApp.entity.Person;
+import ru.alishev.springcourse.FirstSecurityApp.entity.Role;
 import ru.alishev.springcourse.FirstSecurityApp.repositories.PeopleRepository;
 
 

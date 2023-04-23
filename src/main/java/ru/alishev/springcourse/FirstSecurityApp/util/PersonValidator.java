@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.alishev.springcourse.FirstSecurityApp.models.Person;
+import ru.alishev.springcourse.FirstSecurityApp.entity.Person;
 import ru.alishev.springcourse.FirstSecurityApp.services.PersonDetailsService;
 
 

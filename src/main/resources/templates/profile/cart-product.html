@@ -69,7 +69,12 @@
 </div>
 <div class="all">
   <span class="a" th:text="'Всего:  '+ ${total} + '  руб'"></span>
-  <input style="margin-left: 2rem" type="submit" class="btn" value="Перейти к оплате">
+  <form th:action="@{'/profile/cart-product/createOrder'}">
+    <input  style="margin-left: 2rem" type="submit" class="btn" value="Перейти к оплате">
+  </form>
+
+</div>
+
 </div>
 
 <footer class="footer-distributed">

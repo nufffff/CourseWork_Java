@@ -3,7 +3,7 @@ package ru.alishev.springcourse.FirstSecurityApp.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.alishev.springcourse.FirstSecurityApp.models.Person;
+import ru.alishev.springcourse.FirstSecurityApp.entity.Person;
 
 import java.util.Collection;
 import java.util.Collections;

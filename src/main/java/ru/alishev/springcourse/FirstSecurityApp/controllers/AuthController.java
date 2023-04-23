@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.alishev.springcourse.FirstSecurityApp.models.Person;
+import ru.alishev.springcourse.FirstSecurityApp.entity.Person;
 import ru.alishev.springcourse.FirstSecurityApp.services.RegistrationService;
 import ru.alishev.springcourse.FirstSecurityApp.util.PersonValidator;
 

@@ -1,9 +1,10 @@
-package ru.alishev.springcourse.FirstSecurityApp.models;
+package ru.alishev.springcourse.FirstSecurityApp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "product")
@@ -99,5 +100,18 @@ public class Product {
                 ", price=" + price +
                 ", image='" + image + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id == product.id && name.equals(product.name) && price.equals(product.price) && image.equals(product.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, image);
     }
 }

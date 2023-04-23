@@ -2,9 +2,9 @@ package ru.alishev.springcourse.FirstSecurityApp.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.alishev.springcourse.FirstSecurityApp.models.Person;
-import ru.alishev.springcourse.FirstSecurityApp.models.PersonProduct;
-import ru.alishev.springcourse.FirstSecurityApp.models.PersonProductId;
+import ru.alishev.springcourse.FirstSecurityApp.entity.Person;
+import ru.alishev.springcourse.FirstSecurityApp.entity.PersonProduct;
+import ru.alishev.springcourse.FirstSecurityApp.entity.entityId.PersonProductId;
 
 import java.util.List;
 

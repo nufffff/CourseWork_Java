@@ -1,10 +1,6 @@
 package ru.alishev.springcourse.FirstSecurityApp.controllers;
 
 
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -13,9 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.alishev.springcourse.FirstSecurityApp.models.Person;
-import ru.alishev.springcourse.FirstSecurityApp.models.PersonProductId;
-import ru.alishev.springcourse.FirstSecurityApp.models.Product;
+import ru.alishev.springcourse.FirstSecurityApp.entity.*;
+import ru.alishev.springcourse.FirstSecurityApp.entity.entityId.OrderProductId;
+import ru.alishev.springcourse.FirstSecurityApp.entity.entityId.PersonProductId;
+import ru.alishev.springcourse.FirstSecurityApp.services.DopService;
 import ru.alishev.springcourse.FirstSecurityApp.services.PersonDetailsService;
 import ru.alishev.springcourse.FirstSecurityApp.services.ProductService;
 import ru.alishev.springcourse.FirstSecurityApp.services.TestService;
@@ -27,21 +24,23 @@ public class CartController {
 
     private final ProductService productService;
     private final TestService testService;
+    private final DopService dopService;
+
     @Autowired
-    public CartController(PersonDetailsService userService, ProductService productService, TestService testService) {
+    public CartController(PersonDetailsService userService, ProductService productService, TestService testService, DopService dopService) {
         this.userService = userService;
         this.productService = productService;
         this.testService = testService;
+        this.dopService = dopService;
     }
 
     @GetMapping({"profile/cart-product"})
     public String cartProduct(Model model) {
 
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        String name = authentication.getName();
 
-        Person user =  userService.getPerson(authentication.getName());
+        String name = dopService.getNameUser();
+
+        Person user = userService.getPerson(name);
         var pPById_Person = testService.findAllById_Person();
         int total = this.findSum(user);
         model.addAttribute("listPP", pPById_Person);
@@ -51,44 +50,41 @@ public class CartController {
     }
 
     private int findSum(Person user) {
-        List<Product> productList = user.getProductList();
+        var productList = user.getProductList();
         int sum = 0;
-        Product p;
-        for(Iterator var4 = productList.iterator(); var4.hasNext(); sum += p.getPrice()) {
-            p = (Product)var4.next();
+        var perProd = testService.findAllById_Person();
+        for (PersonProduct pP : perProd) {
+            sum += pP.getId().getProduct().getPrice() * pP.getAmount();
         }
+
+
         return sum;
     }
 
-    @GetMapping({"addToCart/{id}"})
+    @GetMapping("addToCart/{id}")
     public String addToCart(@PathVariable("id") int productId) {
 
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
+        String nameUser = dopService.getNameUser();
 
-        Person user = userService.getPerson(authentication.getName());
-        Product product = this.productService.getById(productId).get();
+        var user = userService.getPerson(nameUser);
+        var product = productService.getById(productId).get();
 
-        List<Person> userList = new ArrayList();
-        userList.add(user);
-        product.setPersonList(userList);
+        var id = new PersonProductId(user, product);
+        testService.findAllById(id);
 
-        userService.update(user,product);
-        productService.addProduct(product);
 
-        int total = this.findSum(user);
+
 
         return "redirect:/profile/cart-product";
     }
 
 
     @GetMapping({"profile/cart-product/delete/{id}"})
-    public String delete(@PathVariable("id") int productId){
+    public String delete(@PathVariable("id") int productId) {
 
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
+        String nameUser = dopService.getNameUser();
 
-        Person user = userService.getPerson(authentication.getName());
+        Person user = userService.getPerson(nameUser);
         Product product = productService.getById(productId).get();
 
         var pPId = new PersonProductId(user, product);
@@ -99,37 +95,60 @@ public class CartController {
         //productService.delete(product,user);
 
 
-
-
         return "redirect:/profile/cart-product";
     }
+
     @GetMapping({"profile/cart-product/incAmount/{id}"})
-    public String addAmount(@PathVariable("id") int productId){
+    public String addAmount(@PathVariable("id") int productId) {
 
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
+        String nameUser = dopService.getNameUser();
 
-        Person user = userService.getPerson(authentication.getName());
+        Person user = userService.getPerson(nameUser);
         Product product = this.productService.getById(productId).get();
         testService.addAmount(user, product);
 
 
-
         return "redirect:/profile/cart-product";
     }
+
     @GetMapping({"profile/cart-product/reduceAmount/{id}"})
-    public String reduceAmount(@PathVariable("id") int productId){
+    public String reduceAmount(@PathVariable("id") int productId) {
 
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
+        String nameUser = dopService.getNameUser();
 
-        Person user = userService.getPerson(authentication.getName());
+        Person user = userService.getPerson(nameUser);
         Product product = this.productService.getById(productId).get();
         var pPId = new PersonProductId(user, product);
         var pP = testService.getPP(pPId);
         testService.reduce(pP);
 
 
+        return "redirect:/profile/cart-product";
+    }
+    @GetMapping("/profile/cart-product/createOrder")
+    public String createOrder() {
+        System.out.println("created order");
+        String nameUser = dopService.getNameUser();
+
+        var user = userService.getPerson(nameUser);
+
+        var pP = testService.findAllById_Person();
+        var order = new Order();
+        order.setTotal(findSum(user));
+        order.setPerson(user);
+        testService.saveOrder(order);
+        for(var x: pP){
+
+
+            var orderProduct = new OrderProduct();
+            var idOP = new OrderProductId();
+            idOP.setOrder(order);
+            idOP.setProduct(x.getId().getProduct());
+            orderProduct.setId(idOP);
+            orderProduct.setAmount(x.getAmount());
+            testService.saveOrderAllFuncition(orderProduct, pP);
+
+        }
 
         return "redirect:/profile/cart-product";
     }

@@ -6,14 +6,11 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.alishev.springcourse.FirstSecurityApp.models.Person;
-import ru.alishev.springcourse.FirstSecurityApp.models.PersonProduct;
-import ru.alishev.springcourse.FirstSecurityApp.models.PersonProductId;
-import ru.alishev.springcourse.FirstSecurityApp.models.Product;
-import ru.alishev.springcourse.FirstSecurityApp.repositories.PeopleRepository;
-import ru.alishev.springcourse.FirstSecurityApp.repositories.PersonProductRepository;
-import ru.alishev.springcourse.FirstSecurityApp.repositories.ProductRepository;
+import ru.alishev.springcourse.FirstSecurityApp.entity.*;
+import ru.alishev.springcourse.FirstSecurityApp.entity.entityId.PersonProductId;
+import ru.alishev.springcourse.FirstSecurityApp.repositories.*;
 
+import java.sql.Timestamp;
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,14 +18,18 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class TestService {
 
+    private final OrderProductRepository orderProductRepository;
     private final ProductRepository productRepository;
     private final PeopleRepository peopleRepository;
 
+    private final OrderRepository orderRepository;
     private final PersonProductRepository pPRepository;
     @Autowired
-    public TestService(ProductRepository productRepository, PeopleRepository peopleRepository, PersonProductRepository pPRepository) {
+    public TestService(OrderProductRepository orderProductRepository, ProductRepository productRepository, PeopleRepository peopleRepository, OrderRepository orderRepository, PersonProductRepository pPRepository) {
+        this.orderProductRepository = orderProductRepository;
         this.productRepository = productRepository;
         this.peopleRepository = peopleRepository;
+        this.orderRepository = orderRepository;
         this.pPRepository = pPRepository;
     }
 
@@ -75,5 +76,42 @@ public class TestService {
     @Transactional
     public void deleteNewFeature(PersonProduct pP) {
         pPRepository.delete(pP);
+    }
+    @Transactional
+    public void saveOrderAllFuncition(OrderProduct orderProduct, List<PersonProduct> pP) {
+        removeListPersonAndProduct(pP);
+        System.out.println("mda1");
+        orderProductRepository.save(orderProduct);
+    }
+    @Transactional
+    public void saveOrder(Order order) {
+        order.setDate(new Timestamp(System.currentTimeMillis()));
+        orderRepository.save(order);
+    }
+    @Transactional
+    public void removeListPersonAndProduct(List<PersonProduct> listPerProd){
+        for(var x: listPerProd){
+            var person = x.getId().getPerson();
+            var product = x.getId().getProduct();
+            person.getProductList().removeIf( y -> y.getId() == x.getId().getProduct().getId());
+            product.getPersonList().removeIf(y -> y.getId() == person.getId());
+            peopleRepository.save(person);
+            productRepository.save(product);
+        }
+    }
+    @Transactional
+    public void findAllById(PersonProductId id) {
+        var pPOptional = pPRepository.findById(id);
+        PersonProduct pP;
+        if(pPOptional.isPresent()){
+            pP = pPOptional.get();
+            pP.incAmount();
+
+        }else{
+            pP = new PersonProduct(id, 1);
+
+        }
+        pPRepository.save(pP);
+
     }
 }

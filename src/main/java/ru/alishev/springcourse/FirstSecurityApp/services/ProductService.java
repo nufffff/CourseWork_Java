@@ -4,8 +4,8 @@ package ru.alishev.springcourse.FirstSecurityApp.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.alishev.springcourse.FirstSecurityApp.models.Person;
-import ru.alishev.springcourse.FirstSecurityApp.models.Product;
+import ru.alishev.springcourse.FirstSecurityApp.entity.Person;
+import ru.alishev.springcourse.FirstSecurityApp.entity.Product;
 import ru.alishev.springcourse.FirstSecurityApp.repositories.ProductRepository;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public class ProductService {
     }
     @Transactional
     public void addProduct(Product product) {
-        this.productRepository.save(product);
+        productRepository.save(product);
     }
     @Transactional
     public void delete(Product product, Person user) {

@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.alishev.springcourse.FirstSecurityApp.models.Person;
-import ru.alishev.springcourse.FirstSecurityApp.models.Product;
+import ru.alishev.springcourse.FirstSecurityApp.entity.Person;
+import ru.alishev.springcourse.FirstSecurityApp.entity.Product;
 import ru.alishev.springcourse.FirstSecurityApp.repositories.PeopleRepository;
 import ru.alishev.springcourse.FirstSecurityApp.security.PersonDetails;
 
@@ -40,11 +40,7 @@ public class PersonDetailsService implements UserDetailsService {
         return peopleRepository.findByUsername(username).get();
     }
     @Transactional
-    public void update(Person user, Product product) {
-
-        var productlist = user.getProductList();
-        productlist.add(product);
-        user.setProductList(productlist);
+    public void savePerson(Person user) {
         peopleRepository.save(user);
     }
     @Transactional

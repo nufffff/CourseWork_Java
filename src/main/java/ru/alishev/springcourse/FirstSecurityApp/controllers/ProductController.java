@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.alishev.springcourse.FirstSecurityApp.models.Product;
+import ru.alishev.springcourse.FirstSecurityApp.entity.Product;
 import ru.alishev.springcourse.FirstSecurityApp.services.ProductService;
 
 import java.util.Optional;
