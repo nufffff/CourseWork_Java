@@ -37,6 +37,49 @@
 </header>
 
 <h1>Каталог товаров</h1>
+<form id="searchForm">
+    <label for="nameInput">Product Name:</label>
+    <input type="text" id="nameInput" required>
+    <button type="submit">Search</button>
+</form>
+<div id="productList"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector("#searchForm");
+        const productList = document.querySelector("#productList");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const name = document.querySelector("#nameInput").value;
+            const url = `/test6/${name}`;
+            console.log(url);
+
+            try {
+                const response = await fetch(url);
+                const products = await response.json();
+                console.log(products);
+
+                if (products.length > 0) {
+                    productList.innerHTML = "";
+                    products.forEach((product) => {
+                        console.log(product.name);
+                        console.log(product.image);
+                        console.log(product.price);
+                        const productDiv = document.createElement("div");
+                        productDiv.classList.add("product");
+                        productDiv.innerHTML = `<img src="/image/${product.image}" alt="${product.name}" width="50px" height="50px"><h3>${product.name}</h3><p>Price: ${product.price}</p>`;
+                        productList.appendChild(productDiv);
+                    });
+                } else {
+                    productList.innerHTML = "No products found.";
+                }
+            } catch (error) {
+                console.error(error);
+                productList.innerHTML = "Error fetching products.";
+            }
+        });
+    });
+</script>
 <button onclick="sortItemsByPrice()">Сортировать по цене</button>
 <ul id="itemsList"></ul>
 
