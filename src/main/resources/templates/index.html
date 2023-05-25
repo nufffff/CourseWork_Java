@@ -35,7 +35,12 @@
     </div>
 
 </header>
-
+<div class="wrapper-search">
+    <form class="form">
+        <input type="text" class="search" placeholder="Поиск..." />
+        <ul class="options"></ul>
+    </form>
+</div>
 <h1>Каталог товаров</h1>
 <form id="searchForm">
     <label for="nameInput">Product Name:</label>
@@ -44,7 +49,7 @@
 </form>
 <div id="productList"></div>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const form = document.querySelector("#searchForm");
         const productList = document.querySelector("#productList");
 
@@ -85,32 +90,30 @@
 
 <script>
     let isAscendingOrder = true;
-    let items = null;
+    let items = [];
 
     function loadItems() {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/test', true);
-
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                items = JSON.parse(xhr.responseText);
+        const url = "/test";
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(`Ошибка при выполнении запроса: ${response.status}`);
+                }
+            })
+            .then(jsonData => {
+                items = jsonData
                 displayItems(items);
-            } else {
-                console.error('Не удалось получить список товаров. Статус ответа: ' + xhr.status);
-            }
-        };
-
-        xhr.onerror = function () {
-            console.error('Произошла ошибка при отправке запроса');
-        };
-
-        xhr.send();
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
+
     function displayItems(items) {
         const cartsType = document.querySelector('.carts-type');
         cartsType.innerHTML = '';
-        console.log("lalal");
-        console.log(items);
 
         const itemsPerPage = 9;
         let currentPage = 1;
@@ -120,14 +123,11 @@
             const start = (page - 1) * itemsPerPage;
             const end = start + itemsPerPage;
             const pageItems = items.slice(start, end);
-
             pageItems.forEach(item => {
                 const cart = document.createElement('div');
                 cart.classList.add('cart');
-
                 const name = document.createElement('h2');
                 name.textContent = item.name;
-
                 const imgCart = document.createElement('div');
                 imgCart.classList.add('img-cart');
                 const img = document.createElement('img');
@@ -136,36 +136,27 @@
                 link.href = `/${item.id}`;
                 link.appendChild(img);
                 imgCart.appendChild(link);
-
                 const price = document.createElement('p');
                 price.classList.add('price');
                 price.textContent = `${item.price} руб`;
-
-
-
                 cart.appendChild(name);
                 cart.appendChild(imgCart);
                 cart.appendChild(price);
                 cartsType.appendChild(cart);
             });
-
             if (currentPage >= numPages) {
                 const btn = document.querySelector('.show-more');
                 if (btn) {
                     btn.remove();
                 }
             }
-
             currentPage++;
-
             if (currentPage <= numPages) {
                 const btn = document.querySelector('.show-more');
                 if (btn) {
                     btn.remove();
                 }
                 const content = document.querySelector('.content');
-
-
                 const newBtn = document.createElement('button');
                 newBtn.textContent = 'Показать еще';
                 newBtn.classList.add('show-more');
@@ -175,15 +166,11 @@
                 });
             }
         }
-
         displayPage(currentPage);
     }
 
 
-
     function sortItemsByPrice() {
-
-
         if (isAscendingOrder) {
             items.sort(function (a, b) {
                 return a.price - b.price;
@@ -195,9 +182,40 @@
         }
         isAscendingOrder = !isAscendingOrder;
         displayItems(items);
-
-
     }
+
+    const searchInput = document.querySelector('.search');
+    const searchOptions = document.querySelector('.options');
+
+    function getOptions(word, items) {
+        return items.filter(s => {
+            const regex = new RegExp(word, 'gi');
+            return s.name.match(regex);
+        })
+    }
+
+    function displayOptions() {
+
+        console.log('this.value >> ', this.value);
+
+        const options = getOptions(this.value, items);
+
+        const html = options
+            .map(item => {
+                const regex = new RegExp(this.value, 'gi');
+                const itemName = item.name.replace(regex,
+                    `<span class="hl">${this.value}</span>`
+                )
+                return `<a href="/${item.id}"><li>${itemName}</li></a>`;
+            })
+            .slice(0, 10)
+            .join('');
+
+        searchOptions.innerHTML = this.value ? html : null;
+    }
+
+    searchInput.addEventListener('change', displayOptions);
+    searchInput.addEventListener('keyup', displayOptions);
 
     loadItems();
 </script>
