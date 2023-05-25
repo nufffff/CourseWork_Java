@@ -34,7 +34,7 @@ public class CartController {
         this.dopService = dopService;
     }
 
-    @GetMapping({"profile/cart-product"})
+    @GetMapping("profile/cart-product")
     public String cartProduct(Model model) {
 
 
@@ -150,7 +150,7 @@ public class CartController {
 
         }
 
-        return "redirect:/profile/cart-product";
+        return "redirect:/orders";
     }
 
 

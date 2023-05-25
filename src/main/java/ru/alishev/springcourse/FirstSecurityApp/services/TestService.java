@@ -1,5 +1,6 @@
 package ru.alishev.springcourse.FirstSecurityApp.services;
 
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -12,7 +13,9 @@ import ru.alishev.springcourse.FirstSecurityApp.repositories.*;
 
 import java.sql.Timestamp;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(readOnly = true)
@@ -41,6 +44,7 @@ public class TestService {
     public List<Product> getAllListSortProduct(){
         var listProduct = productRepository.findAll();
         listProduct.sort(Comparator.comparingInt(Product::getPrice));
+
         return listProduct;
 
     }
@@ -114,4 +118,6 @@ public class TestService {
         pPRepository.save(pP);
 
     }
+
+
 }

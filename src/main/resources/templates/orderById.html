@@ -8,9 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Корзина</title>
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/cart.css">
-    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/cart.css">
+    <link rel="stylesheet" href="/css/footer.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css">
@@ -44,31 +44,36 @@
 
 </header>
 <section>
-    <h1  class="cart">Мои заказы</h1>
+    <h1  class="cart" th:text="'Заказ №' + ${orderId}"></h1>
     <div class="container">
-        <div class="rowrow" th:each="order : ${orders}">
+        <div class="rowrow" th:each="oP : ${productsOfOrder}">
 
             <div class="list-group">
-                <span class="a">Номер заказа:</span>
-                <span class="b" th:text="${order.getId()}"></span>
+                <span class="a">Название товара:</span>
+                <span class="b" th:text="${oP.getId().getProduct().getName()}"></span>
             </div>
             <div class="list-group">
-                <span class="a">Дата оформления:</span>
-                <span class="b" th:text="${order.getDate()}"></span>
+                <span class="a">Цена за штуку:</span>
+                <span class="b" th:text="${oP.getId().getProduct().getPrice()} + ' руб.'"></span>
             </div>
             <div class="list-group">
-                <span class="a">Стоимость заказа</span>
-                <span class="b" th:text="${order.getTotal()} + ' руб.'"></span>
+                <span class="a">Количество:</span>
+                <span class="b" th:text="${oP.getAmount()}"></span>
             </div>
             <div class="list-group">
-                <span class="a">Оформлен на</span>
-                <span class="b" th:text="${order.getPerson().getUsername()}"></span>
+                <span class="a">Всего:</span>
+                <span class="b" th:text="${oP.getAmount() * oP.getId().getProduct().getPrice()} + ' руб.'"></span>
             </div>
+
             <div class="list-group">
-                <a class="delete" th:href="@{'/order/check/'+ ${order.getId()}}"><span class="a">Посмотреть заказ</span></a>
+                <a class="delete" th:href="@{'/'+ ${oP.getId().getProduct().getId()}}"><span class="a">Посмотреть страницу товара</span></a>
             </div>
 
         </div>
+    </div>
+    <div class="list-group">
+        <span class="a">Общаяя стоимость заказа:</span>
+        <span class="b" th:text="${productsOfOrder.get(0).getId().getOrder().getTotal()} + ' руб.'"></span>
     </div>
 </section>
 

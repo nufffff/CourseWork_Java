@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import ru.alishev.springcourse.FirstSecurityApp.entity.OrderProduct;
 import ru.alishev.springcourse.FirstSecurityApp.repositories.OrderRepository;
 import ru.alishev.springcourse.FirstSecurityApp.repositories.PeopleRepository;
 import ru.alishev.springcourse.FirstSecurityApp.services.DopService;
+import ru.alishev.springcourse.FirstSecurityApp.services.OrderProductService;
 
 @Controller
 public class OrderController {
@@ -14,12 +17,14 @@ public class OrderController {
     private final DopService dopService;
 
     private final PeopleRepository peopleRepository;
+    private final OrderProductService orderProductService;
 
     @Autowired
-    public OrderController(OrderRepository orderRepository, DopService dopService, PeopleRepository peopleRepository) {
+    public OrderController(OrderRepository orderRepository, DopService dopService, PeopleRepository peopleRepository, OrderProductService orderProductService) {
         this.orderRepository = orderRepository;
         this.dopService = dopService;
         this.peopleRepository = peopleRepository;
+        this.orderProductService = orderProductService;
     }
 
     @GetMapping("/orders")
@@ -29,4 +34,17 @@ public class OrderController {
         model.addAttribute("orders", orderRepository.findAllByPerson(person));
         return "/order";
     }
+
+    @GetMapping("/order/check/{id}")
+    public String showOrderById(Model model, @PathVariable("id") int id){
+
+        var productsOfOrder = orderProductService.getOrderProduct(id);
+        model.addAttribute("productsOfOrder", productsOfOrder);
+        model.addAttribute("orderId", id);
+
+
+        return "/orderById";
+    }
+
+
 }

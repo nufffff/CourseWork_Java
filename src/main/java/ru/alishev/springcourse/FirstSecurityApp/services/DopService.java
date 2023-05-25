@@ -13,6 +13,8 @@ public class DopService {
     public String getNameUser(){
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
+        System.out.println(authentication.getPrincipal().toString());
+        System.out.println(authentication);
         return authentication.getName();
     }
 
