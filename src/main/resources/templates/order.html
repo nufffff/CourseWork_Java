@@ -8,9 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Корзина</title>
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/cart.css">
-    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/cart.css">
+    <link rel="stylesheet" href="/css/footer.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css">
@@ -28,7 +28,10 @@
     <a th:href="@{/index}" class="logo">HardwareStore</a>
     <div class="menu">
         <div class="icons">
-            <a class="fas fa-user" th:text="${name}"></a>
+            <a th:href="@{/orders}" class="fas fa-gift"></a>
+        </div>
+        <div class="icons">
+            <a class="fas fa-user" th:href="@{/profile}" th:text="${name}"></a>
             <a th:href="@{/profile/cart-product}" class="fas fa-shopping-cart"></a>
         </div>
         <div class="Exit">

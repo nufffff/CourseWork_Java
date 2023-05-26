@@ -18,7 +18,7 @@ public class ReviewsController {
 
 
     @PostMapping("/addReviews/{id}")
-    public String addReviews(@ModelAttribute("rev") Review review, @PathVariable("id")int id){
+    public String addReviews(@ModelAttribute("rev") Review review, @PathVariable("id") int id){
         reviewService.saveReview(id, review);
 
         return "redirect:/" + id;

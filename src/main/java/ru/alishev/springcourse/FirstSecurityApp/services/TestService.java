@@ -73,8 +73,13 @@ public class TestService {
     }
     @Transactional
     public void reduce(PersonProduct pP) {
-        pP.reduceAmount();
-        pPRepository.save(pP);
+        if(pP.getAmount()==1){
+            pPRepository.delete(pP);
+        }else{
+
+            pP.reduceAmount();
+            pPRepository.save(pP);
+        }
     }
 
     @Transactional

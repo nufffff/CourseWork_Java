@@ -20,7 +20,10 @@
     <a th:href="@{/index}" class="logo">HardwareStore</a>
     <div class="menu" >
         <div class="icons">
-            <a class="fas fa-user" th:text="${name}"></a>
+            <a th:href="@{/orders}" class="fas fa-gift"></a>
+        </div>
+        <div class="icons">
+            <a class="fas fa-user" th:href="@{/profile}" th:text="${name}"></a>
             <a th:href="@{/profile/cart-product}" class="fas fa-shopping-cart"></a>
         </div>
         <div class = "Exit">
@@ -50,13 +53,17 @@
                 <input  class="butt" type="submit" value="Добавить в корзину">
             </form>
         </div>
+        <div th:text="${product.description}"></div>
     </div>
     <div class="content2">
         <form id="myForm" th:action="@{/addReviews/{id}(id = ${product.id})}" th:object="${rev}" method="post">
             <label for="review" th:text="'Оставить свой отзыв на данный товар: '"> </label>
             <input type="text" th:field="*{description}" id="review">
+
             <input type="submit" value="Отправить" >
+
         </form>
+
         <!--<form id="myForm" th:action="@{/addReviews/{id}(id = ${product.id})}" th:method="POST" th:object="${rev}">
 
             <label for="review" th:text="'Оставить свой отзыв на данный товар пользователю: '"> </label>

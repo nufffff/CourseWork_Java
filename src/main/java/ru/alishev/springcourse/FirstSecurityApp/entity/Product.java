@@ -16,6 +16,9 @@ public class Product {
 
     private String name;
 
+    private String description;
+
+
 
     private Integer price;
 
@@ -47,6 +50,13 @@ public class Product {
 
     public List<Review> getReviews() {
         return reviews;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setReviews(List<Review> reviews) {

@@ -116,8 +116,8 @@ public class CartController {
 
         String nameUser = dopService.getNameUser();
 
-        Person user = userService.getPerson(nameUser);
-        Product product = this.productService.getById(productId).get();
+        var user = userService.getPerson(nameUser);
+        var product = this.productService.getById(productId).get();
         var pPId = new PersonProductId(user, product);
         var pP = testService.getPP(pPId);
         testService.reduce(pP);
