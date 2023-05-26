@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.alishev.springcourse.FirstSecurityApp.entity.Product;
+import ru.alishev.springcourse.FirstSecurityApp.services.DopService;
 import ru.alishev.springcourse.FirstSecurityApp.services.PersonDetailsService;
 import ru.alishev.springcourse.FirstSecurityApp.services.ProductService;
 
@@ -20,19 +21,19 @@ public class HelloController {
 
     private final ProductService productService;
     private final PersonDetailsService personDetailsService;
+
+    private final DopService dopService;
     @Autowired
-    public HelloController(ProductService productService, PersonDetailsService personDetailsService) {
+    public HelloController(ProductService productService, PersonDetailsService personDetailsService, DopService dopService) {
         this.productService = productService;
         this.personDetailsService = personDetailsService;
+        this.dopService = dopService;
     }
 
     @GetMapping("/index")
     public String index(Model model) {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        String name = authentication.getName();
-        List<Product> products = this.productService.getAll();
-        model.addAttribute("products", products);
+        String name = dopService.getNameUser();
+        model.addAttribute("products", productService.getAll());
         model.addAttribute("name", name);
         return "index";
     }

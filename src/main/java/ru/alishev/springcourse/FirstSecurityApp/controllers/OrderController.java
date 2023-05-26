@@ -32,6 +32,7 @@ public class OrderController {
         String nameUser = dopService.getNameUser();
         var person = peopleRepository.findByUsername(nameUser).get();
         model.addAttribute("orders", orderRepository.findAllByPerson(person));
+        model.addAttribute("name", nameUser);
         return "/order";
     }
 
@@ -41,6 +42,7 @@ public class OrderController {
         var productsOfOrder = orderProductService.getOrderProduct(id);
         model.addAttribute("productsOfOrder", productsOfOrder);
         model.addAttribute("orderId", id);
+        model.addAttribute("name", dopService.getNameUser());
 
 
         return "/orderById";

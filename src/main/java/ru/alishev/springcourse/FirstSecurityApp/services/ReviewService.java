@@ -30,10 +30,12 @@ public class ReviewService {
     }
 
     @Transactional
-    public void saveReview(int product_id, Review review){
+    public void saveReview(int product_id, Review rev){
         String name = dopService.getNameUser();
         var person = peopleRepository.findByUsername(name).get();
         var product = productRepository.findById(product_id).get();
+        var review = new Review();
+        review.setDescription(rev.getDescription());
         review.setPerson(person);
         review.setProduct(product);
         review.setDate(new Timestamp(System.currentTimeMillis()));
@@ -45,6 +47,7 @@ public class ReviewService {
         }else{
             person.getReviews().add(review);
         }
+        peopleRepository.save(person);
 
         //add review to product
         if(product.getReviews() == null){
@@ -52,6 +55,7 @@ public class ReviewService {
         }else{
             product.getReviews().add(review);
         }
+        productRepository.save(product);
 
     }
 
