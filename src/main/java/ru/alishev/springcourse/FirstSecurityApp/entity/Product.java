@@ -34,7 +34,9 @@ public class Product {
     )
     private List<Order> ordersList;
 
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviews;
 
 
 
@@ -43,6 +45,13 @@ public class Product {
 
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     public int getId() {
         return id;

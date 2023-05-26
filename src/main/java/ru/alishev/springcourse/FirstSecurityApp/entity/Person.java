@@ -41,14 +41,25 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<Product> productList;
-    @JsonIgnore
 
+    @JsonIgnore
     @OneToMany(mappedBy = "person")
     private List<Order> order;
+    @JsonIgnore
+    @OneToMany(mappedBy = "person")
+    private List<Review> reviews;
 
     // Конструктор по умолчанию нужен для Spring
 
     public Person() {
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public List<Order> getOrder() {

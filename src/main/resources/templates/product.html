@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${product.name}"></title>
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/product.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/cart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css">
 </head>
@@ -49,6 +50,60 @@
                 <input  class="butt" type="submit" value="Добавить в корзину">
             </form>
         </div>
+    </div>
+    <div class="content2">
+        <form id="myForm" th:action="@{/addReviews/{id}(id = ${product.id})}" th:object="${rev}" method="post">
+            <label for="review" th:text="'Оставить свой отзыв на данный товар: '"> </label>
+            <input type="text" th:field="*{description}" id="review">
+            <input type="submit" value="Отправить" >
+        </form>
+        <!--<form id="myForm" th:action="@{/addReviews/{id}(id = ${product.id})}" th:method="POST" th:object="${rev}">
+
+            <label for="review" th:text="'Оставить свой отзыв на данный товар пользователю: '"> </label>
+            <input type="text" th:field="*{description}" id="review">
+            <button type="button" onclick="sendRequest()">Отправить</button>
+        </form>
+
+        <script>
+            function sendRequest() {
+                var form = document.getElementById("myForm");
+                var formData = new FormData(form);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", form.action, true);
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        console.log("ok")
+                    }
+                };
+
+                xhr.send(formData);
+            }
+        </script>-->
+        <div class="container">
+            <div class="rowrow" th:each="rev : ${reviews}">
+
+                <div class="list-group">
+                    <span class="a">Автор:</span>
+                    <span class="b" th:text="${rev.person.username}"></span>
+                </div>
+                <div class="list-group">
+                    <span class="a">Дата:</span>
+                    <span class="b" th:text="${rev.date}"></span>
+                </div>
+                <div class="list-group">
+                    <span class="a">Отзыв:</span>
+                    <span class="b" th:text="${rev.description}"></span>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
     </div>
 
 </div>
